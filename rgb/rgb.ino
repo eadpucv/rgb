@@ -46,16 +46,11 @@ void loop() {
   analogWrite(outG, outGval);
   analogWrite(outB, outBval);
 
-  debug();
+  // debug();
 }
 
 
-<<<<<<< Updated upstream:rgb01/rgb01.ino
-void debug(){
-  
-=======
 void debug() {
->>>>>>> Stashed changes:rgb01.ino
   // print the results to the serial monitor:
   Serial.print("R = ");
   Serial.print(potR);
