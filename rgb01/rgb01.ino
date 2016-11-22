@@ -46,24 +46,26 @@ void loop() {
   analogWrite(outG, outGval);
   analogWrite(outB, outBval);
 
-  // debug();
+  debug();
 }
 
 
 void debug(){
+  
   // print the results to the serial monitor:
-  Serial.print("sen = ");
+  Serial.print("R = ");
   Serial.print(potR);
   //Serial.print("\t out = ");
   //Serial.print(outputValue);
-  Serial.print("\t sen1 = ");
+  Serial.print("\t G = ");
   Serial.print(potG);
   //Serial.print("\t out1 = ");
   //Serial.println(outGval);
-  Serial.print("\t sen2 = ");
+  Serial.print("\t B = ");
   Serial.println(potB);
   //Serial.print("\t out2 = ");
   //Serial.println(outBval);
-  // delay(1);
+  delay(50);
+  
 }
 
