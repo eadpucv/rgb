@@ -75,24 +75,22 @@ void loop() {
   analogWrite(lightG, lightGval);
   analogWrite(lightB, lightBval);
 
-  // debug();
+  debug();
 }
 
 
 void debug() {
   // print the results to the serial monitor:
+  
   Serial.print("R = ");
-  Serial.print(potR);
-  //Serial.print("\t light = ");
-  //Serial.print(lightputValue);
-  Serial.print("\t G = ");
-  Serial.print(potG);
-  //Serial.print("\t light1 = ");
-  //Serial.println(lightGval);
-  Serial.print("\t B = ");
-  Serial.println(potB);
-  //Serial.print("\t light2 = ");
-  //Serial.println(lightBval);
+  Serial.print(lightRval);
+
+  Serial.print("\t\t G = ");
+  Serial.print(lightGval);
+
+  Serial.print("\t\t B = ");
+  Serial.println(lightBval);
+
   delay(50);
 
 }
