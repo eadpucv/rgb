@@ -32,12 +32,12 @@ float potRnorm = 0;
 float potGnorm = 0;
 float potBnorm = 0;
 
-// color 1
+// color 1 - origin
 int colR1 = 0;
 int colG1 = 255;
 int colB1 = 0;
 
-// color 2
+// color 2 - destiny
 int colR2 = 255;
 int colG2 = 0;
 int colB2 = 255;
@@ -47,7 +47,7 @@ int counter = 0;
 int potRprev = 0;
 int potGprev = 0;
 int potBprev = 0;
-int minDiff = 10;
+int minDiff = 40;
 int timeGap = 500;
 
 void setup() {
@@ -74,7 +74,7 @@ void loop() {
     // timer
     if (abs((potR + potG + potB) - (potRprev + potGprev + potBprev)) < minDiff) {
       counter ++;
-    } else {
+    } else if (abs((potR + potG + potB) - (potRprev + potGprev + potBprev)) > minDiff) {
       counter = 0;
     }
 
@@ -83,6 +83,7 @@ void loop() {
       lightGval = colG1;
       lightBval = colB1;
     }
+
     potRprev = potR;
     potGprev = potG;
     potBprev = potB;
@@ -99,9 +100,9 @@ void loop() {
   analogWrite(lightG, lightGval);
   analogWrite(lightB, lightBval);
 
+  // debugPots();
   // debugLights();
   // debugNorms();
-  debugTimer();
 }
 
 void debugLights() {
@@ -110,10 +111,10 @@ void debugLights() {
   Serial.print("R = ");
   Serial.print(lightRval);
 
-  Serial.print("\t\t G = ");
+  Serial.print("\t G = ");
   Serial.print(lightGval);
 
-  Serial.print("\t\t B = ");
+  Serial.print("\t B = ");
   Serial.println(lightBval);
 
   delay(50);
@@ -125,17 +126,34 @@ void debugNorms() {
   Serial.print("potRnorm = ");
   Serial.print(potRnorm);
 
-  Serial.print("\t\t potGnorm = ");
+  Serial.print("\t potGnorm = ");
   Serial.print(potGnorm);
 
-  Serial.print("\t\t potBnorm = ");
-  Serial.println(potBnorm);
+  Serial.print("\t potBnorm = ");
+  Serial.print(potBnorm);
 
+  Serial.print("\t counter = ");
+  Serial.println(counter);
+  
   delay(50);
 }
 
-void debugTimer() {
-  Serial.print("counter = ");
+void debugPots() {
+  // print the results to the serial monitor:
+
+  Serial.print("potR = ");
+  Serial.print(potR);
+
+  Serial.print("\t potG = ");
+  Serial.print(potG);
+
+  Serial.print("\t potB = ");
+  Serial.print(potB);
+
+  Serial.print("\t counter = ");
   Serial.println(counter);
+  
+  delay(50);
 }
+
 
