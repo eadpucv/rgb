@@ -33,14 +33,22 @@ float potGnorm = 0;
 float potBnorm = 0;
 
 // color 1
-int colR1 = 255;
-int colG1 = 0;
+int colR1 = 0;
+int colG1 = 255;
 int colB1 = 0;
 
 // color 2
-int colR2 = 0;
-int colG2 = 255;
+int colR2 = 255;
+int colG2 = 0;
 int colB2 = 255;
+
+// temporizer variables
+int counter = 0;
+int potRprev = 0;
+int potGprev = 0;
+int potBprev = 0;
+int minDiff = 10;
+int timeGap = 500;
 
 void setup() {
   // initialize serial communications at 9600 bps:
@@ -59,9 +67,25 @@ void loop() {
     potGnorm = potG / 1024.0;
     potBnorm = potB / 1024.0;
 
-    lightRval = potRnorm * colR2 + (1 - potRnorm) * colR1;
-    lightGval = potRnorm * colG2 + (1 - potRnorm) * colG1;
-    lightBval = potRnorm * colB2 + (1 - potRnorm) * colB1;
+    lightRval = ((potRnorm * colR2) + ((1 - potRnorm) * colR1)) * potGnorm;
+    lightGval = ((potRnorm * colG2) + ((1 - potRnorm) * colG1)) * potGnorm;
+    lightBval = ((potRnorm * colB2) + ((1 - potRnorm) * colB1)) * potGnorm;
+
+    // timer
+    if (abs((potR + potG + potB) - (potRprev + potGprev + potBprev)) < minDiff) {
+      counter ++;
+    } else {
+      counter = 0;
+    }
+
+    if (counter > timeGap) {
+      lightRval = colR1;
+      lightGval = colG1;
+      lightBval = colB1;
+    }
+    potRprev = potR;
+    potGprev = potG;
+    potBprev = potB;
   }
   else {
     // map values
@@ -75,13 +99,14 @@ void loop() {
   analogWrite(lightG, lightGval);
   analogWrite(lightB, lightBval);
 
-  debug();
+  // debugLights();
+  // debugNorms();
+  debugTimer();
 }
 
-
-void debug() {
+void debugLights() {
   // print the results to the serial monitor:
-  
+
   Serial.print("R = ");
   Serial.print(lightRval);
 
@@ -92,6 +117,25 @@ void debug() {
   Serial.println(lightBval);
 
   delay(50);
+}
 
+void debugNorms() {
+  // print the results to the serial monitor:
+
+  Serial.print("potRnorm = ");
+  Serial.print(potRnorm);
+
+  Serial.print("\t\t potGnorm = ");
+  Serial.print(potGnorm);
+
+  Serial.print("\t\t potBnorm = ");
+  Serial.println(potBnorm);
+
+  delay(50);
+}
+
+void debugTimer() {
+  Serial.print("counter = ");
+  Serial.println(counter);
 }
 
