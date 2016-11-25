@@ -25,7 +25,7 @@ int lightGval = 0;
 int lightBval = 0;
 
 // switch for different modes
-boolean transitionMode = true;
+boolean transitionMode = false;
 
 // normalized potenciometer values
 float potRnorm = 0;
@@ -63,9 +63,9 @@ void loop() {
   potB = analogRead(analogInPin2);
 
   if (transitionMode) {
-    potRnorm = potR / 1024.0;
-    potGnorm = potG / 1024.0;
-    potBnorm = potB / 1024.0;
+    potRnorm = potR / 1023.0;
+    potGnorm = potG / 1023.0;
+    potBnorm = potB / 1023.0;
 
     lightRval = ((potRnorm * colR2) + ((1 - potRnorm) * colR1)) * potGnorm;
     lightGval = ((potRnorm * colG2) + ((1 - potRnorm) * colG1)) * potGnorm;
@@ -83,7 +83,6 @@ void loop() {
       lightGval = colG1;
       lightBval = colB1;
     }
-
     potRprev = potR;
     potGprev = potG;
     potBprev = potB;
@@ -101,7 +100,7 @@ void loop() {
   analogWrite(lightB, lightBval);
 
   // debugPots();
-  // debugLights();
+  debugLights();
   // debugNorms();
 }
 
