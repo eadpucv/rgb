@@ -26,6 +26,7 @@ int lightBval = 0;
 
 // switch for different modes
 boolean transitionMode = false;
+// false = rgb perillas | true = modo transición entre 2 colores
 
 // normalized potenciometer values
 float potRnorm = 0;
