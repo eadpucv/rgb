@@ -34,13 +34,13 @@ float potGnorm = 0;
 float potBnorm = 0;
 
 // color 1 - origin
-int colR1 = 0;
+int colR1 = 255;
 int colG1 = 255;
 int colB1 = 0;
 
 // color 2 - destiny
-int colR2 = 255;
-int colG2 = 0;
+int colR2 = 0;
+int colG2 = 155;
 int colB2 = 255;
 
 // temporizer variables
@@ -68,9 +68,9 @@ void loop() {
     potGnorm = potG / 1023.0;
     potBnorm = potB / 1023.0;
 
-    lightRval = ((potRnorm * colR2) + ((1 - potRnorm) * colR1)) * potGnorm;
-    lightGval = ((potRnorm * colG2) + ((1 - potRnorm) * colG1)) * potGnorm;
-    lightBval = ((potRnorm * colB2) + ((1 - potRnorm) * colB1)) * potGnorm;
+    lightRval = (potRnorm * colR2) + ((1 - potRnorm) * colR1);
+    lightGval = (potRnorm * colG2) + ((1 - potRnorm) * colG1);
+    lightBval = (potRnorm * colB2) + ((1 - potRnorm) * colB1);
 
     // timer
     if (abs((potR + potG + potB) - (potRprev + potGprev + potBprev)) < minDiff) {
@@ -101,7 +101,7 @@ void loop() {
   analogWrite(lightB, lightBval);
 
   // debugPots();
-  debugLights();
+  // debugLights();
   // debugNorms();
 }
 
