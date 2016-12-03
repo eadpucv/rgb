@@ -58,6 +58,7 @@ void loop() {
 
   // read potenciometer values:
   potR = analogRead(analogInPin0);
+  potR = constrain(potR, 1, 1023);
   //potG = analogRead(analogInPin1);
   //potB = analogRead(analogInPin2);
 
@@ -78,26 +79,25 @@ void loop() {
   }
 
   if (counter > timeGap) {
-    lightRval = colR1;
-    lightGval = colG1;
-    lightBval = colB1;
+    lightRval = colR2;
+    lightGval = colG2;
+    lightBval = colB2;
   }
-  
-  potRprev = potR;
-  //potGprev = potG;
-  //potBprev = potB;
 
+  // potRprev = potR;
+  // potGprev = potG;
+  // potBprev = potB;
 
+  delay(50);
 
+  // write values
+  analogWrite(lightR, lightRval);
+  analogWrite(lightG, lightGval);
+  analogWrite(lightB, lightBval);
 
-// write values
-analogWrite(lightR, lightRval);
-analogWrite(lightG, lightGval);
-analogWrite(lightB, lightBval);
-
-// debugPots();
-// debugLights();
-// debugNorms();
+  // debugPots();
+  // debugLights();
+  // debugNorms();
 
 }
 
