@@ -6,8 +6,8 @@
 
 // input addresses
 const int analogInPin0 = 0;
-const int analogInPin1 = 1;
-const int analogInPin2 = 2;
+//const int analogInPin1 = 1;
+//const int analogInPin2 = 2;
 
 // lightput addresses
 const int lightR = 9;
@@ -16,22 +16,20 @@ const int lightB = 11;
 
 // potenciometer values
 int potR = 0;
-int potG = 0;
-int potB = 0;
+//int potG = 0;
+//int potB = 0;
 
 // mapped lightput values
 int lightRval = 0;
 int lightGval = 0;
 int lightBval = 0;
 
-// switch for different modes
-boolean transitionMode = false;
 // false = rgb perillas | true = modo transición entre 2 colores
 
 // normalized potenciometer values
 float potRnorm = 0;
-float potGnorm = 0;
-float potBnorm = 0;
+//float potGnorm = 0;
+//float potBnorm = 0;
 
 // color 1 - origin
 int colR1 = 255;
@@ -46,8 +44,8 @@ int colB2 = 255;
 // temporizer variables
 int counter = 0;
 int potRprev = 0;
-int potGprev = 0;
-int potBprev = 0;
+//int potGprev = 0;
+//int potBprev = 0;
 int minDiff = 40;
 int timeGap = 500;
 
@@ -60,49 +58,47 @@ void loop() {
 
   // read potenciometer values:
   potR = analogRead(analogInPin0);
-  potG = analogRead(analogInPin1);
-  potB = analogRead(analogInPin2);
+  //potG = analogRead(analogInPin1);
+  //potB = analogRead(analogInPin2);
 
-  if (transitionMode) {
-    potRnorm = potR / 1023.0;
-    potGnorm = potG / 1023.0;
-    potBnorm = potB / 1023.0;
 
-    lightRval = (potRnorm * colR2) + ((1 - potRnorm) * colR1);
-    lightGval = (potRnorm * colG2) + ((1 - potRnorm) * colG1);
-    lightBval = (potRnorm * colB2) + ((1 - potRnorm) * colB1);
+  potRnorm = potR / 1023.0;
+  //potGnorm = potG / 1023.0;
+  //potBnorm = potB / 1023.0;
 
-    // timer
-    if (abs((potR + potG + potB) - (potRprev + potGprev + potBprev)) < minDiff) {
-      counter ++;
-    } else if (abs((potR + potG + potB) - (potRprev + potGprev + potBprev)) > minDiff) {
-      counter = 0;
-    }
+  lightRval = (potRnorm * colR2) + ((1 - potRnorm) * colR1);
+  lightGval = (potRnorm * colG2) + ((1 - potRnorm) * colG1);
+  lightBval = (potRnorm * colB2) + ((1 - potRnorm) * colB1);
 
-    if (counter > timeGap) {
-      lightRval = colR1;
-      lightGval = colG1;
-      lightBval = colB1;
-    }
-    potRprev = potR;
-    potGprev = potG;
-    potBprev = potB;
-  }
-  else {
-    // map values
-    lightRval = map(potR, 0, 1023, 255, 0);
-    lightGval = map(potG, 0, 1023, 255, 0);
-    lightBval = map(potB, 0, 1023, 255, 0);
+  // timer
+  if (abs(potR - potRprev) < minDiff) {
+    counter ++;
+  } else if (abs(potR - potRprev) > minDiff) {
+    counter = 0;
   }
 
-  // write values
-  analogWrite(lightR, lightRval);
-  analogWrite(lightG, lightGval);
-  analogWrite(lightB, lightBval);
+  if (counter > timeGap) {
+    lightRval = colR1;
+    lightGval = colG1;
+    lightBval = colB1;
+  }
+  
+  potRprev = potR;
+  //potGprev = potG;
+  //potBprev = potB;
 
-  // debugPots();
-  // debugLights();
-  // debugNorms();
+
+
+
+// write values
+analogWrite(lightR, lightRval);
+analogWrite(lightG, lightGval);
+analogWrite(lightB, lightBval);
+
+// debugPots();
+// debugLights();
+// debugNorms();
+
 }
 
 void debugLights() {
@@ -126,15 +122,15 @@ void debugNorms() {
   Serial.print("potRnorm = ");
   Serial.print(potRnorm);
 
-  Serial.print("\t potGnorm = ");
-  Serial.print(potGnorm);
+  //Serial.print("\t potGnorm = ");
+  //Serial.print(potGnorm);
 
-  Serial.print("\t potBnorm = ");
-  Serial.print(potBnorm);
+  //Serial.print("\t potBnorm = ");
+  //Serial.print(potBnorm);
 
   Serial.print("\t counter = ");
   Serial.println(counter);
-  
+
   delay(50);
 }
 
@@ -144,15 +140,15 @@ void debugPots() {
   Serial.print("potR = ");
   Serial.print(potR);
 
-  Serial.print("\t potG = ");
-  Serial.print(potG);
+  //Serial.print("\t potG = ");
+  //Serial.print(potG);
 
-  Serial.print("\t potB = ");
-  Serial.print(potB);
+  //Serial.print("\t potB = ");
+  //Serial.print(potB);
 
   Serial.print("\t counter = ");
   Serial.println(counter);
-  
+
   delay(50);
 }
 
